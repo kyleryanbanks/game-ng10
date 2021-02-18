@@ -25,7 +25,9 @@
               "apps/familiar/src/favicon.ico",
               "apps/familiar/src/assets"
             ],
-            "styles": ["apps/familiar/src/styles.scss"],
+            "styles": [
+              "apps/familiar/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -79,7 +81,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/familiar/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/familiar/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -112,7 +116,80 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/familiar-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/familiar-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "roost": {
+      "root": "apps/roost",
+      "sourceRoot": "apps/roost/src",
+      "projectType": "application",
+      "prefix": "roost",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "nx-electron:build",
+          "options": {
+            "outputPath": "dist/apps/roost",
+            "main": "apps/roost/src/main.ts",
+            "tsConfig": "apps/roost/tsconfig.app.json",
+            "assets": [
+              "apps/roost/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/roost/src/environments/environment.ts",
+                  "with": "apps/roost/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "nx-electron:execute",
+          "options": {
+            "buildTarget": "roost:build"
+          }
+        },
+        "package": {
+          "builder": "nx-electron:package",
+          "options": {
+            "name": "roost",
+            "frontendProject": "familiar",
+            "outputPath": "dist/packages",
+            "prepackageOnly": true
+          }
+        },
+        "make": {
+          "builder": "nx-electron:make",
+          "options": {
+            "name": "roost",
+            "frontendProject": "familiar",
+            "outputPath": "dist/executables"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/roost/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/roost/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
