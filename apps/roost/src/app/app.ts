@@ -58,26 +58,27 @@ export default class App {
 
   private static initMainWindow() {
     const workAreaSize = screen.getPrimaryDisplay().workAreaSize;
-    const width = Math.min(1280, workAreaSize.width || 1280);
-    const height = Math.min(720, workAreaSize.height || 720);
+    const width = Math.min(640, workAreaSize.width || 1280);
+    const height = Math.min(480, workAreaSize.height || 720);
 
     // Create the browser window.
     App.mainWindow = new BrowserWindow({
       width: width,
       height: height,
       show: false,
+      alwaysOnTop: true,
       titleBarStyle: 'default',
       transparent: true,
       frame: false,
       backgroundColor: '#2c664ca4',
       webPreferences: {
-        contextIsolation: true,
-        backgroundThrottling: false,
+        nodeIntegration: true,
         preload: join(__dirname, 'preload.js'),
       },
     });
     App.mainWindow.setMenu(null);
     App.mainWindow.center();
+    App.mainWindow.webContents.openDevTools();
 
     // if main window is ready to show, close the splash window and show the main window
     App.mainWindow.once('ready-to-show', () => {
