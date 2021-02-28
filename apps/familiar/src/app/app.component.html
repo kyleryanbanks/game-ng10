@@ -1,6 +1,14 @@
-<header class="flex">
+<div id="header">Drag Me</div>
+
+<div style="text-align: center">
   <h1>Welcome to Familiar!</h1>
-</header>
-<main>
-  <h1>This is actually working?!</h1>
-</main>
+  <button (click)="onConnect()">Connect</button>
+  <button (click)="onPlugIn()">Plug In!</button>
+  <button (click)="familiar.start()">P2 Start</button>
+  <button (click)="familiar.disconnect()">Disconnect</button>
+  <button (click)="onToggle()">{{ turtling ? 'Chillll' : "TURTLE!"}}</button>
+</div>
+
+<div>Connected: {{ connected }}</div>
+<div>Jacked IN!: {{ pluggedIn }}</div>
+<div>TuRtlIng: {{ turtling }}</div>
